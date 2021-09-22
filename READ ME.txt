@@ -1,0 +1,4 @@
+atlas 
+connect to mongoose
+.env file & install dotenv library
+put node_modules & .env file in .gitignore file

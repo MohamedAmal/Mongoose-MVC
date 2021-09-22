@@ -1,0 +1,45 @@
+
+html
+    head
+        link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" ,crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer")
+    body
+        h1 hello world #{title}
+        p=products
+
+        div.container(class="d-flex justify-content-center flex-column")
+            a(href='/products/add' class="col-2 btn btn-secondary m-auto") Add
+            div.row(class="d-flex justify-content-center")
+                each product in products
+                    div.card.m-4(style="width: 18rem;")
+                        img.card-img-top(src="https://via.placeholder.com/120")
+                        div.card-body
+                            h5.card-title=product.name
+                            p.card-text=product.store
+                            p.card-text Price: $#{product.price}
+                            p.card-text #{product.description}
+                            a(href=`/products/${product._id}` class="btn btn-primary") Edit
+                            button(class="delete-btn btn btn-secondary m-2" name=`${product._id}`) Delete
+                
+
+script.
+    window.addEventListener('load', () => {
+        console.log('ready')
+        const deleteBtn = document.getElementsByClassName('delete-btn')
+        Array.from(deleteBtn).forEach((e)=>{
+            e.addEventListener('click', async()=>{
+                //- const data  = await fetch(`/products/${e.name}`,{method:'DELETE'})
+                //- const res = await data.json()
+                //- if(data.ok){
+                //-     location.reload()
+                //- }
+                const res = await axios.delete(`/products/${e.name}`)
+                if(res.status === 200){
+                    location.reload()
+                }
+            })
+        })
+    })
+
+
+
